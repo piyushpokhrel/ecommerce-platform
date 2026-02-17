@@ -3,23 +3,22 @@ import express from "express";
 import cors from "cors";
 import axios from "axios";
 
-const express = require("express");
-const axios = require("axios");
-const cors = require("cors");
-
 const app = express();
+
 app.use(cors({
-origin: process.env.CORS_ORIGIN,
+origin: process.env.CORS_ORIGIN || "*",
 }));
+
 app.use(express.json());
 
-app.get("/api/health", (req, res) => res.json({ ok: true }));
+app.get("/health", (req, res) => res.send("ok"));
 
 app.get("/api/projects", async (req, res) => {
 try {
     const username = process.env.GITHUB_USERNAME;
+
     if (!username) {
-    return res.status(400).json({ error: "Missing GITHUB_USERNAME in .env" });
+    return res.status(400).json({ error: "Missing GITHUB_USERNAME" });
     }
 
     const response = await axios.get(
@@ -43,4 +42,4 @@ try {
 });
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`API listening on port ${PORT}`));
+app.listen(PORT, () => console.log(`API running on ${PORT}`));
