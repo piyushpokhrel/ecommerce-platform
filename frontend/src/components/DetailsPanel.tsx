@@ -7,21 +7,21 @@ import { Button } from './Button';
 import { Skeleton } from './Skeleton';
 
 export const DetailsPanel = () => {
-  const { isOpen, selectedProjectId, close } = useDetailsPanelStore();
+  const { isOpen, selectedProject, close } = useDetailsPanelStore();
   const [project, setProject] = useState<Project | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if (selectedProjectId && isOpen) {
+    if (selectedProject && isOpen) {
       setIsLoading(true);
       projectsApi
-        .getById(selectedProjectId)
+        .getById(selectedProject.id)
         .then((res) => setProject(res.data))
         .finally(() => setIsLoading(false));
     } else {
       setProject(null);
     }
-  }, [selectedProjectId, isOpen]);
+  }, [selectedProject, isOpen]);
 
   return (
     <>

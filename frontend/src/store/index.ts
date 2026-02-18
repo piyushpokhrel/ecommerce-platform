@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import type { Toast } from '../types';
+import type { Project, Toast } from '../types';
 
 /**
  * Why Zustand?
@@ -40,16 +40,17 @@ removeToast: (id) =>
 
 interface DetailsPanelStore {
 isOpen: boolean;
-selectedProjectId: string | null;
+selectedProject: Project | null;
 toggle: () => void;
-open: (projectId: string) => void;
+open: (project: Project) => void;
 close: () => void;
 }
 
+
 export const useDetailsPanelStore = create<DetailsPanelStore>((set) => ({
 isOpen: false,
-selectedProjectId: null,
+selectedProject: null,
 toggle: () => set((state) => ({ isOpen: !state.isOpen })),
-open: (projectId) => set({ isOpen: true, selectedProjectId: projectId }),
-close: () => set({ isOpen: false, selectedProjectId: null })
+open: (project) => set({ isOpen: true, selectedProject: project }),
+close: () => set({ isOpen: false, selectedProject: null })
 }));

@@ -1,5 +1,4 @@
 import type { HTMLAttributes, ReactNode, ForwardRefExoticComponent, RefAttributes } from 'react';
-
 export interface CardProps extends HTMLAttributes<HTMLDivElement> {
   children?: ReactNode;
   variant?: 'default' | 'outlined' | 'elevated';

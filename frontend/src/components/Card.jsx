@@ -1,4 +1,5 @@
-import React from "react";
+import api from "../services/api";
+api.get(`/projects/${selectedProjectId}`).then((res) => setProject(res.data));
 
 export const Card = ({ children, className = "", hoverable, interactive, onClick }) => {
   return (
