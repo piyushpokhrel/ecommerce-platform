@@ -42,4 +42,7 @@ try {
 });
 
 const PORT = process.env.PORT || 5000;
+app.get("/", (req, res) => {
+res.send("Backend is running ✅ Try /health or /api/projects");
+});
 app.listen(PORT, () => console.log(`API running on ${PORT}`));
