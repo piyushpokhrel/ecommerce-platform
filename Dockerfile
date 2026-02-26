@@ -22,5 +22,6 @@ RUN mvn -DskipTests package
 FROM eclipse-temurin:21-jre
 WORKDIR /app
 COPY --from=backend-build /app/backend/target/*.jar app.jar
-EXPOSE 8080
-CMD ["sh", "-c", "java -Dserver.port=$PORT -jar app.jar"]
+EXPOSE 10000
+ENV PORT=10000
+CMD ["sh", "-c", "java -Dserver.port=${PORT} -jar app.jar"]
