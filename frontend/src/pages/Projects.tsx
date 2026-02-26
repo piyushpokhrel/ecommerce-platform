@@ -120,14 +120,14 @@ setProjects(mapped);
     setFilteredProjects(filtered);
   };
 
-  const handleProjectClick = (projectId: string) => {
-    open(projectId);
-    addToast({
-      type: 'info',
-      message: 'Project details loaded',
-      duration: 2000
-    });
-  };
+const handleProjectClick = (project: Project) => {
+  open(project);
+  addToast({
+    type: 'info',
+    message: 'Project details loaded',
+    duration: 2000
+  });
+};
 
   return (
 
@@ -220,7 +220,7 @@ setProjects(mapped);
             >
               <ProjectCard
                 project={project}
-                onClick={() => handleProjectClick(project.id)}
+                onClick={() => handleProjectClick(project)}
               />
             </div>
           ))}
