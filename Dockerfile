@@ -24,4 +24,4 @@ WORKDIR /app
 COPY --from=backend-build /app/backend/target/*.jar app.jar
 EXPOSE 10000
 ENV PORT=10000
-CMD ["sh", "-c", "java -Dserver.port=${PORT} -jar app.jar"]
+CMD ["sh", "-c", "java -Dserver.address=0.0.0.0 -Dserver.port=${PORT} -jar app.jar"]
