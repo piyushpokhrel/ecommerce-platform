@@ -22,10 +22,13 @@ public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         "/v3/api-docs/**",
         "/swagger-ui/**",
         "/swagger-ui.html",
-        "/webjars/**"
+        "/webjars/**",
+        "/api/**",
+        "/h2-console/**"
         ).permitAll()
         .anyRequest().authenticated()
     );
+    http.headers(headers -> headers.frameOptions(frame -> frame.disable()));
 
     return http.build();
 }
