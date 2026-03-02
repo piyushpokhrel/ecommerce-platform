@@ -1,8 +1,4 @@
 spring:
-  autoconfigure:
-    exclude:
-      - org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
-      - org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration
   application:
     name: ecommerce-backend
   profiles:
@@ -29,6 +25,7 @@ spring:
       path: /h2-console
 
 server:
+  forward-headers-strategy: framework
   port: ${PORT:10000}
   address: 0.0.0.0
   error:
