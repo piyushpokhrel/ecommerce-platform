@@ -16,13 +16,15 @@ public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     .csrf(csrf -> csrf.disable())
     .authorizeHttpRequests(auth -> auth
         .requestMatchers(
+        "/", "/error",
         "/health",
         "/actuator/**",
         "/v3/api-docs/**",
         "/swagger-ui/**",
-        "/swagger-ui.html"
+        "/swagger-ui.html",
+        "/webjars/**"
         ).permitAll()
-        .anyRequest().permitAll()
+        .anyRequest().authenticated()
     );
 
     return http.build();
