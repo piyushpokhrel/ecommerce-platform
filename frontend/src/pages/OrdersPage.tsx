@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "../components/Card";
 
-export function OrdersPage() {
+export default function OrdersPage() {
     return (
     <div className="space-y-6">
         <div>

@@ -5,11 +5,11 @@ import { ToastContainer } from "./components/Toast";
 import { Dashboard } from "./pages/DashboardPage";
 import { Projects } from "./pages/Projects";
 import { useDetailsPanelStore } from "./store";
-import { SponsorPage } from "./pages/SponsorPage";
-import { AboutPage } from "./pages/AboutPage";
-import { ContactPage } from "./pages/ContactPage";
-import { LoginPage } from "./pages/LoginPage";
-import { OrdersPage } from "./pages/OrdersPage";
+import {SponsorPage} from "./pages/SponsorPage";
+import AboutPage from "./pages/AboutPage";
+import ContactPage from "./pages/ContactPage";
+import LoginPage from "./pages/LoginPage";
+import OrdersPage from "./pages/OrdersPage";
 
 function App() {
     const { isOpen } = useDetailsPanelStore();
@@ -36,16 +36,15 @@ function App() {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div className="animate-[fadeUp_.25s_ease-out]">
                 <Routes>
-                <Route path="/sponsor" element={<SponsorPage />} />
-                <Route path="/" element={<Dashboard />} />
-                <Route path="/projects" element={<Projects />} />
-                <Route path="*" element={<Navigate to="/" replace />} />
-                <Route path="/about" element={<AboutPage />} />
-                <Route path="/contact" element={<ContactPage />} />
-                <Route path="/login" element={<LoginPage />} />
-                <Route path="/orders" element={<OrdersPage />} />
-                <Route path="*" element={<Navigate to="/" replace />} />
-                </Routes>
+    <Route path="/" element={<Dashboard />} />
+    <Route path="/projects" element={<Projects />} />
+    <Route path="/sponsor" element={<SponsorPage />} />
+    <Route path="/about" element={<AboutPage />} />
+    <Route path="/contact" element={<ContactPage />} />
+    <Route path="/login" element={<LoginPage />} />
+    <Route path="/orders" element={<OrdersPage />} />
+    <Route path="*" element={<Navigate to="/" replace />} />
+</Routes>
                 </div>
             </div>
             </main>

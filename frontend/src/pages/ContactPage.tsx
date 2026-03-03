@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "../components/Card";
 import { Button } from "../components/Button";
 
-export function ContactPage() {
+export default function ContactPage() {
     return (
     <div className="space-y-6">
         <div>

@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "../components/Card";
 import { Button } from "../components/Button";
 
-export function LoginPage() {
+export default function LoginPage() {
     return (
     <div className="space-y-6">
         <div>

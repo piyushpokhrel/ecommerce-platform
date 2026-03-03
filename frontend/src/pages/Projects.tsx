@@ -263,10 +263,12 @@ const ProjectCard = ({
     href={project.url}
     target="_blank"
     rel="noopener noreferrer"
-    className="inline-flex items-center gap-1 mb-3 text-xs font-semibold rounded-full border px-3 py-1
-            border-slate-200 !text-slate-900 bg-white/60 hover:bg-white
-            dark:border-slate-700 dark:!text-slate-100 dark:bg-slate-900/40 dark:hover:bg-slate-900/70
-              transition"
+    className="
+  inline-flex items-center gap-1 rounded-full border px-3 py-1 text-xs font-semibold
+  bg-white/70 text-slate-900 border-slate-200 hover:bg-white
+  dark:bg-slate-900/50 dark:text-slate-100 dark:border-slate-700 dark:hover:bg-slate-900/80
+  transition-colors
+"
               onClick={(e) => e.stopPropagation()}
             >
               View on GitHub →

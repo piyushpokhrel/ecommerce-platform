@@ -2,9 +2,23 @@ import { Link, useLocation } from "react-router-dom";
 import { clsx } from "clsx";
 import { useEffect, useState } from "react";
 import { applyTheme, getInitialTheme, type Theme } from "../utils/theme";
+import { toggleTheme } from "../utils/theme";
+import Sidebar from "./Sidebar";
 
 export const Navbar = () => {
-  const location = useLocation();
+const location = useLocation();
+const [sidebarOpen, setSidebarOpen] = useState(false);
+const [flipped, setFlipped] = useState(false);
+
+const handleClick = () => {
+  setSidebarOpen(true);
+  setFlipped(true);
+
+  // revert back to hand after 1.5s
+  setTimeout(() => {
+    setFlipped(false);
+  }, 1500);
+};
 
   const navItems = [
     { path: "/", label: "Dashboard" },
@@ -55,9 +69,24 @@ export const Navbar = () => {
 
           <div className="flex items-center gap-2">
             <button
+  onClick={handleClick}
+  className="relative rounded-xl border border-slate-200 bg-white/70 px-3 py-2 text-xl
+            text-slate-900 hover:bg-white
+            dark:border-slate-800 dark:bg-slate-950/60 dark:text-white dark:hover:bg-slate-900
+              transition-all duration-200 active:scale-90"
+  aria-label="Open menu"
+>
+  {flipped ? "🖕" : "✋"}
+</button>
+            <button
               aria-label="Toggle theme"
-              onClick={() => setTheme((t) => (t === "dark" ? "light" : "dark"))}
-              className="rounded-lg p-2 text-gray-600 transition-colors hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-gray-300 dark:hover:bg-gray-700"
+              onClick={toggleTheme}
+              className="
+                  inline-flex items-center gap-1 rounded-full border px-3 py-1 text-xs font-semibold
+                  bg-white/70 text-slate-900 border-slate-200 hover:bg-white
+                  dark:bg-slate-900/50 dark:text-slate-100 dark:border-slate-700 dark:hover:bg-slate-900/80
+                  transition-colors
+                "
             >
               <svg
                 className="h-5 w-5"
@@ -71,7 +100,6 @@ export const Navbar = () => {
                 <path d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
               </svg>
             </button>
-
             <button
               aria-label="Notifications"
               className="relative rounded-lg p-2 text-gray-600 transition-colors hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-gray-300 dark:hover:bg-gray-700"
@@ -120,6 +148,8 @@ export const Navbar = () => {
 >
   GitHub
 </a>
+<Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
     </nav>
+
   );
 };
