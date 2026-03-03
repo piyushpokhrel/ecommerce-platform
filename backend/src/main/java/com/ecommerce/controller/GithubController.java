@@ -1,49 +1,45 @@
 package com.ecommerce.controller;
 
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
-
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.util.*;
 
-
-@Tag(name = "GitHub", description = "GitHub Projects API")
 @RestController
 @RequestMapping("/api")
 public class GithubController {
 
-@Operation(summary = "List GitHub repos", description = "Returns public repos for the configured GITHUB_USERNAME.")
-@RequestMapping("/api")
-
     @GetMapping("/projects")
     public List<Map<String, Object>> getProjects() {
-
         String username = System.getenv("GITHUB_USERNAME");
-
-        if (username == null) {
+        if (username == null || username.isBlank()) {
             throw new RuntimeException("Missing GITHUB_USERNAME");
         }
 
-        String url = "https://api.github.com/users/" + username + "/repos?per_page=100&sort=updated";
+        URI uri = UriComponentsBuilder
+    .fromUriString("https://api.github.com/users/{username}/repos")
+    .queryParam("per_page", 100)
+    .queryParam("sort", "updated")
+    .buildAndExpand(username)
+    .toUri();
 
         RestTemplate restTemplate = new RestTemplate();
-        URI uri = java.util.Objects.requireNonNull(URI.create(url));
         RequestEntity<Void> request = RequestEntity.get(uri).build();
-        ResponseEntity<List<Map<String, Object>>> response = restTemplate.exchange(
-                request,
-                new ParameterizedTypeReference<List<Map<String, Object>>>() {}
-        );
+
+        ResponseEntity<List<Map<String, Object>>> response =
+                restTemplate.exchange(request, new ParameterizedTypeReference<>() {});
+
         List<Map<String, Object>> repos = Optional.ofNullable(response.getBody())
                 .orElseGet(Collections::emptyList);
 
         List<Map<String, Object>> projects = new ArrayList<>();
-
         for (Map<String, Object> repo : repos) {
             Map<String, Object> project = new HashMap<>();
             project.put("id", repo.get("id"));
@@ -55,7 +51,6 @@ public class GithubController {
             project.put("language", repo.get("language"));
             projects.add(project);
         }
-
         return projects;
     }
 }

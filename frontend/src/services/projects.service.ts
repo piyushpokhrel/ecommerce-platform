@@ -13,6 +13,6 @@ language: string | null;
 
 
 export const getGithubProjects = async () => {
-const res = await api.get<GithubRepo[]>("/projects");
-return res.data;
+    const res = await api.get<GithubRepo[]>("/api/projects");
+    return res.data;
 };

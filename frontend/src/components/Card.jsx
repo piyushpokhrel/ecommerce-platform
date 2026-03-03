@@ -1,9 +1,21 @@
-import api from "../services/api";
-api.get(`/projects/${selectedProjectId}`).then((res) => setProject(res.data));
+export const Card = ({
+  children,
+  className = "",
+  hoverable,
+  interactive,
+  onClick,
+}) => {
+  // Optional: add simple styling hooks if you want hover/interactive effects
+  const classes = [
+    className,
+    hoverable ? "hover:shadow-md transition-shadow" : "",
+    interactive ? "cursor-pointer" : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
 
-export const Card = ({ children, className = "", hoverable, interactive, onClick }) => {
   return (
-    <div className={className} onClick={onClick}>
+    <div className={classes} onClick={onClick}>
       {children}
     </div>
   );
@@ -22,5 +34,3 @@ export const CardTitle = ({ children, className = "" }) => (
 export const CardContent = ({ children, className = "" }) => (
   <div className={["px-6 pb-6", className].join(" ")}>{children}</div>
 );
-
-

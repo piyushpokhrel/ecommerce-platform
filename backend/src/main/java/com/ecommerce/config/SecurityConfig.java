@@ -13,6 +13,7 @@ public class SecurityConfig {
 @Bean
 public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http
+    .cors(cors -> {})
     .csrf(csrf -> csrf.disable())
     .authorizeHttpRequests(auth -> auth
         .requestMatchers(
@@ -26,7 +27,7 @@ public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         "/api/**",
         "/h2-console/**"
         ).permitAll()
-        .anyRequest().authenticated()
+        .anyRequest().permitAll()
     );
     http.headers(headers -> headers.frameOptions(frame -> frame.disable()));
 

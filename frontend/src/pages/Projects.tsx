@@ -1,34 +1,40 @@
-import { useEffect, useState } from 'react';
-import { useDetailsPanelStore, useToastStore } from '../store';
-import type { Project, ProjectStatus, ProjectPriority } from '../types';
-import { Input } from '../components/Input';
-import { Select } from '../components/Select';
-import { Card, CardContent, CardHeader, CardTitle } from '../components/Card';
-import { ProjectCardSkeleton } from '../components/Skeleton';
+import { useEffect, useMemo, useState } from "react";
+import { useDetailsPanelStore, useToastStore } from "../store";
+import type { Project, ProjectStatus, ProjectPriority } from "../types";
+import { Input } from "../components/Input";
+import { Select } from "../components/Select";
+import { Card, CardContent, CardHeader, CardTitle } from "../components/Card";
+import { ProjectCardSkeleton } from "../components/Skeleton";
 import { getGithubProjects } from "../services/projects.service";
 import type { GithubRepo } from "../services/projects.service";
 
-
 const statusOptions = [
-  { value: '', label: 'All Statuses' },
-  { value: 'active', label: 'Active' },
-  { value: 'completed', label: 'Completed' },
-  { value: 'archived', label: 'Archived' }
+  { value: "", label: "All Statuses" },
+  { value: "active", label: "Active" },
+  { value: "completed", label: "Completed" },
+  { value: "archived", label: "Archived" },
 ];
 
 const priorityOptions = [
-  { value: '', label: 'All Priorities' },
-  { value: 'low', label: 'Low' },
-  { value: 'medium', label: 'Medium' },
-  { value: 'high', label: 'High' }
+  { value: "", label: "All Priorities" },
+  { value: "low", label: "Low" },
+  { value: "medium", label: "Medium" },
+  { value: "high", label: "High" },
 ];
 
 const sortOptions = [
-  { value: 'recent', label: 'Most Recent' },
-  { value: 'progress', label: 'Progress' },
-  { value: 'title', label: 'Title (A-Z)' }
+  { value: "recent", label: "Most Recent" },
+  { value: "progress", label: "Progress" },
+  { value: "title", label: "Title (A-Z)" },
 ];
 
+function safeDateString(input?: string | null): string {
+  if (!input) return new Date().toISOString();
+  const d = new Date(input);
+  return isNaN(d.getTime()) ? new Date().toISOString() : d.toISOString();
+}
+
+// Map GitHub repos -> your UI Project type
 function mapGithubToProjects(repos: GithubRepo[]): Project[] {
   return repos.map((r) => ({
     id: String(r.id),
@@ -37,54 +43,49 @@ function mapGithubToProjects(repos: GithubRepo[]): Project[] {
     status: "active",
     priority: "medium",
     tags: [
-      ...(r.language ? [r.language] : []),
+      ...(r.language ? [String(r.language)] : []),
       ...(r.stars ? [`⭐ ${r.stars}`] : []),
       ...(r.forks ? [`🍴 ${r.forks}`] : []),
     ],
     progress: 100,
-    startDate: new Date().toISOString(),
+    // Prefer GitHub timestamps if available on your GithubRepo type
+    startDate: safeDateString((r as any).updated_at ?? (r as any).pushed_at ?? null),
     teamSize: 1,
     image: undefined,
-    url: r.url, // ✅ correct
+    url: r.url,
   }));
 }
 
-
 export const Projects = () => {
   const [projects, setProjects] = useState<Project[]>([]);
-  const [filteredProjects, setFilteredProjects] = useState<Project[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [statusFilter, setStatusFilter] = useState('');
-  const [priorityFilter, setPriorityFilter] = useState('');
-  const [sortBy, setSortBy] = useState('recent');
+
+  const [searchQuery, setSearchQuery] = useState("");
+  const [statusFilter, setStatusFilter] = useState("");
+  const [priorityFilter, setPriorityFilter] = useState("");
+  const [sortBy, setSortBy] = useState("recent");
+
   const { addToast } = useToastStore();
   const { open } = useDetailsPanelStore();
 
   useEffect(() => {
+    const loadProjects = async () => {
+      setIsLoading(true);
+      try {
+        const repos = await getGithubProjects(); // should call GET /api/projects
+        const mapped = mapGithubToProjects(repos);
+        setProjects(mapped);
+      } catch {
+        addToast({ type: "error", message: "Failed to load GitHub projects" });
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
     loadProjects();
-  }, []);
+  }, [addToast]);
 
-  const loadProjects = async () => {
-  setIsLoading(true);
-  try {
-    const repos = await getGithubProjects();
-    const mapped = mapGithubToProjects(repos);
-setProjects(mapped);
-  }catch(error) {
-    addToast({ type: "error", message: "Failed to load GitHub projects" });
-  } finally {
-    setIsLoading(false);
-  }
-};
-
-  useEffect(() => {
-    filterAndSortProjects();
-  }, [projects, searchQuery, statusFilter, priorityFilter, sortBy]);
-
-
-    
-  const filterAndSortProjects = () => {
+  const filteredProjects = useMemo(() => {
     let filtered = [...projects];
 
     if (searchQuery) {
@@ -107,39 +108,38 @@ setProjects(mapped);
 
     filtered.sort((a, b) => {
       switch (sortBy) {
-        case 'progress':
+        case "progress":
           return b.progress - a.progress;
-        case 'title':
+        case "title":
           return a.title.localeCompare(b.title);
-        case 'recent':
+        case "recent":
         default:
           return new Date(b.startDate).getTime() - new Date(a.startDate).getTime();
       }
     });
 
-    setFilteredProjects(filtered);
+    return filtered;
+  }, [projects, searchQuery, statusFilter, priorityFilter, sortBy]);
+
+  const handleProjectClick = (project: Project) => {
+    open(project);
+    addToast({
+      type: "info",
+      message: "Project details loaded",
+      duration: 2000,
+    });
   };
 
-const handleProjectClick = (project: Project) => {
-  open(project);
-  addToast({
-    type: 'info',
-    message: 'Project details loaded',
-    duration: 2000
-  });
-};
-
   return (
-
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
             Projects
             <div className="text-xs text-gray-500">
-  projects: {projects.length} | filtered: {filteredProjects.length} | loading: {String(isLoading)}
-</div>
-
+              projects: {projects.length} | filtered: {filteredProjects.length} | loading:{" "}
+              {String(isLoading)}
+            </div>
           </h1>
           <p className="text-gray-600 dark:text-gray-400">
             Showing {filteredProjects.length} of {projects.length} projects
@@ -214,14 +214,9 @@ const handleProjectClick = (project: Project) => {
         </Card>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredProjects.map((project, index) => (
-            <div
-              key={project.id}
-            >
-              <ProjectCard
-                project={project}
-                onClick={() => handleProjectClick(project)}
-              />
+          {filteredProjects.map((project) => (
+            <div key={project.id}>
+              <ProjectCard project={project} onClick={() => handleProjectClick(project)} />
             </div>
           ))}
         </div>
@@ -232,21 +227,21 @@ const handleProjectClick = (project: Project) => {
 
 const ProjectCard = ({
   project,
-  onClick
+  onClick,
 }: {
   project: Project;
   onClick: () => void;
 }) => {
   const statusColors: Record<ProjectStatus, string> = {
-    active: 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200',
-    completed: 'bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-200',
-    archived: 'bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200'
+    active: "bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200",
+    completed: "bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-200",
+    archived: "bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200",
   };
 
   const priorityColors: Record<ProjectPriority, string> = {
-    low: 'bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200',
-    medium: 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-200',
-    high: 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-200'
+    low: "bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200",
+    medium: "bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-200",
+    high: "bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-200",
   };
 
   return (
@@ -262,20 +257,19 @@ const ProjectCard = ({
 
         <CardHeader>
           <CardTitle>{project.title}</CardTitle>
-            {project.url && (
-  <a
-    href={project.url}
-    target="_blank"
-    rel="noopener noreferrer"
-    className="inline-block mb-3 text-sm text-blue-600 dark:text-blue-400 hover:underline"
-    onClick={(e) => e.stopPropagation()}
-  >
-    View on GitHub →
-  </a>
-)}
+
+          {project.url && (
+            <a
+              href={project.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block mb-3 text-sm text-blue-600 dark:text-blue-400 hover:underline"
+              onClick={(e) => e.stopPropagation()}
+            >
+              View on GitHub →
+            </a>
+          )}
         </CardHeader>
-
-
 
         <p className="text-sm text-gray-600 dark:text-gray-400 mb-4 line-clamp-2">
           {project.description}
@@ -310,9 +304,7 @@ const ProjectCard = ({
           <div>
             <div className="flex items-center justify-between text-sm mb-1">
               <span className="text-gray-600 dark:text-gray-400">Progress</span>
-              <span className="font-medium text-gray-900 dark:text-white">
-                {project.progress}%
-              </span>
+              <span className="font-medium text-gray-900 dark:text-white">{project.progress}%</span>
             </div>
             <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
               <div
@@ -331,4 +323,5 @@ const ProjectCard = ({
     </Card>
   );
 };
+
 export default Projects;
