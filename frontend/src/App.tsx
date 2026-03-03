@@ -5,6 +5,7 @@ import { ToastContainer } from "./components/Toast";
 import { Dashboard } from "./pages/DashboardPage";
 import { Projects } from "./pages/Projects";
 import { useDetailsPanelStore } from "./store";
+import { SponsorPage } from "./pages/SponsorPage";
 
 function App() {
     const { isOpen } = useDetailsPanelStore();
@@ -31,6 +32,7 @@ function App() {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div className="animate-[fadeUp_.25s_ease-out]">
                 <Routes>
+                <Route path="/sponsor" element={<SponsorPage />} />
                 <Route path="/" element={<Dashboard />} />
                 <Route path="/projects" element={<Projects />} />
                 <Route path="*" element={<Navigate to="/" replace />} />
