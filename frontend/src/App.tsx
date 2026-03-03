@@ -6,6 +6,10 @@ import { Dashboard } from "./pages/DashboardPage";
 import { Projects } from "./pages/Projects";
 import { useDetailsPanelStore } from "./store";
 import { SponsorPage } from "./pages/SponsorPage";
+import { AboutPage } from "./pages/AboutPage";
+import { ContactPage } from "./pages/ContactPage";
+import { LoginPage } from "./pages/LoginPage";
+import { OrdersPage } from "./pages/OrdersPage";
 
 function App() {
     const { isOpen } = useDetailsPanelStore();
@@ -35,6 +39,11 @@ function App() {
                 <Route path="/sponsor" element={<SponsorPage />} />
                 <Route path="/" element={<Dashboard />} />
                 <Route path="/projects" element={<Projects />} />
+                <Route path="*" element={<Navigate to="/" replace />} />
+                <Route path="/about" element={<AboutPage />} />
+                <Route path="/contact" element={<ContactPage />} />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/orders" element={<OrdersPage />} />
                 <Route path="*" element={<Navigate to="/" replace />} />
                 </Routes>
                 </div>
