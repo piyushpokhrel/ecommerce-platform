@@ -258,19 +258,15 @@ const ProjectCard = ({
         <CardHeader>
           <CardTitle>{project.title}</CardTitle>
 
-          {project.url && (
-            <a
-              href={project.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="
-                      inline-flex items-center gap-1 mb-3 text-xs font-semibold
-                      rounded-full border px-3 py-1
-                      border-slate-200 text-slate-900 bg-white/60 hover:bg-white
-                      dark:border-slate-700 dark:text-slate-100 dark:bg-slate-900/40 dark:hover:bg-slate-900/70
-                      hover:shadow-md hover:shadow-slate-400/20 dark:hover:shadow-slate-900/40
-                      transition
-                    "
+{project.url && (
+  <a
+    href={project.url}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="inline-flex items-center gap-1 mb-3 text-xs font-semibold rounded-full border px-3 py-1
+            border-slate-200 !text-slate-900 bg-white/60 hover:bg-white
+            dark:border-slate-700 dark:!text-slate-100 dark:bg-slate-900/40 dark:hover:bg-slate-900/70
+              transition"
               onClick={(e) => e.stopPropagation()}
             >
               View on GitHub →
