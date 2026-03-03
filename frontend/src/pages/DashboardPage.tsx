@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '../components/Card';
 import { Button } from '../components/Button';
 import { DashboardCardSkeleton, ProjectCardSkeleton } from '../components/Skeleton';
 import { useToastStore } from '../store';
+import { SponsorBanner } from "../components/SponsorBanner";
 
 export const Dashboard = () => {
   const [stats, setStats] = useState<DashboardStats | null>(null);
@@ -78,7 +79,7 @@ export const Dashboard = () => {
           Welcome back! Here's what's happening with your projects.
         </p>
       </div>
-
+      <SponsorBanner />
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
         {isLoading
           ? Array.from({ length: 4 }).map((_, i) => <DashboardCardSkeleton key={i} />)
