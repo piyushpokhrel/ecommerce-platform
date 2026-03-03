@@ -5,13 +5,21 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 
 import java.net.URI;
 import java.util.*;
 
+
+@Tag(name = "GitHub", description = "GitHub Projects API")
 @RestController
 @RequestMapping("/api")
 public class GithubController {
+
+@Operation(summary = "List GitHub repos", description = "Returns public repos for the configured GITHUB_USERNAME.")
+@RequestMapping("/api")
 
     @GetMapping("/projects")
     public List<Map<String, Object>> getProjects() {

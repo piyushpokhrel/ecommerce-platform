@@ -56,6 +56,11 @@ springdoc:
     operations-sorter: method
   api-docs:
     path: /v3/api-docs
+  group-configs:
+    - group: public
+      paths-to-match: /health, /api/**
+    - group: admin
+      paths-to-match: /actuator/**
 
 # =========================
 # DEV PROFILE
