@@ -1,18 +1,11 @@
-export const Card = ({
-  children,
-  className = "",
-  hoverable,
-  interactive,
-  onClick,
-}) => {
-  // Optional: add simple styling hooks if you want hover/interactive effects
+export const Card = ({ children, className = "", hoverable, interactive, onClick }) => {
   const classes = [
-    className,
-    hoverable ? "hover:shadow-md transition-shadow" : "",
+    "rounded-2xl border border-slate-200/60 bg-white/70 backdrop-blur shadow-sm",
+    "dark:border-slate-800/60 dark:bg-slate-900/40 dark:shadow-black/10",
+    hoverable ? "transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg" : "",
     interactive ? "cursor-pointer" : "",
-  ]
-    .filter(Boolean)
-    .join(" ");
+    className,
+  ].filter(Boolean).join(" ");
 
   return (
     <div className={classes} onClick={onClick}>
