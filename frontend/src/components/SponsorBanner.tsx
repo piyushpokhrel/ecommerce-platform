@@ -11,7 +11,7 @@ export function SponsorBanner({
     title = "Sponsor / Support this portfolio",
     subtitle = "Want your brand featured here? I offer a clean sponsor spot + click tracking.",
     ctaText = "Become a sponsor",
-    ctaHref = "mailto:your.email@example.com?subject=Sponsorship%20Inquiry",
+    ctaHref = "mailto:pokhrelpiyush78@gmail.com?subject=Sponsorship%20Inquiry",
 }: Props) {
     return (
     <div className="relative overflow-hidden rounded-2xl border border-slate-200/70 bg-white/70 backdrop-blur shadow-sm
