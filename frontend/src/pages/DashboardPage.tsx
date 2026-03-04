@@ -7,6 +7,9 @@ import { Button } from '../components/Button';
 import { DashboardCardSkeleton, ProjectCardSkeleton } from '../components/Skeleton';
 import { useToastStore } from '../store';
 import { SponsorBanner } from "../components/SponsorBanner";
+import { ScrollReveal } from "../components/ScrollReveal";
+import { ParallaxBlob } from "../components/ParallaxBlob";
+import { div } from 'framer-motion/m';
 
 export const Dashboard = () => {
   const [stats, setStats] = useState<DashboardStats | null>(null);
@@ -70,9 +73,28 @@ export const Dashboard = () => {
   ] : [];
 
   return (
+  
     <div className="space-y-8">
+    <div className="relative">
+  <ParallaxBlob className="left-10 top-[-6rem] w-72 h-72 bg-indigo-500/20" />
+  <ParallaxBlob className="right-10 top-20 w-72 h-72 bg-fuchsia-500/20" />
+<p>
+  welcome to your dashboard! Here you can get a quick overview of your projects, track progress, and manage your work efficiently. Use the navigation links to explore different sections and stay on top of your tasks.
+</p>
+  <ScrollReveal>
+    <div className="p-4 rounded-2xl border border-slate-200/60 dark:border-slate-700/60 bg-white/60 dark:bg-slate-900/40 backdrop-blur">
+      <p className="font-semibold text-slate-900 dark:text-slate-100">
+      </p>
+      <p className="text-sm text-slate-600 dark:text-slate-300">
+        Get away, Fly away, Come away with me, Where the skies are blue, All your dreams come true! uWu !!!
+      </p>
+    </div>
+  </ScrollReveal>
+</div>
       <div>
         <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+          <br>
+          </br>
           Dashboard
         </h1>
         <p className="text-gray-600 dark:text-gray-400">

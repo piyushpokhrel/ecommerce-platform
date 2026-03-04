@@ -25,7 +25,7 @@ export default function ContactPage() {
             </a>
 
             <a
-            href="https://www.linkedin.com/"
+            href="https://www.linkedin.com/in/piyushpokhrel7789"
             target="_blank"
             rel="noopener noreferrer"
             >
