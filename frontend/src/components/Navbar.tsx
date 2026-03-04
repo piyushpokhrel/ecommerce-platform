@@ -6,23 +6,24 @@ import { toggleTheme } from "../utils/theme";
 import Sidebar from "./Sidebar";
 
 export const Navbar = () => {
-const location = useLocation();
-const [sidebarOpen, setSidebarOpen] = useState(false);
-const [flipped, setFlipped] = useState(false);
+  const location = useLocation();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [flipped, setFlipped] = useState(false);
 
-const handleClick = () => {
-  setSidebarOpen(true);
-  setFlipped(true);
+  const handleClick = () => {
+    setSidebarOpen(true);
+    setFlipped(true);
 
-  // revert back to hand after 1.5s
-  setTimeout(() => {
-    setFlipped(false);
-  }, 1500);
-};
+    // revert back to hand after 1.5s
+    setTimeout(() => {
+      setFlipped(false);
+    }, 1500);
+  };
 
   const navItems = [
     { path: "/", label: "Dashboard" },
     { path: "/projects", label: "Projects" },
+    { path: "/builder", label: "Builder" },
   ];
 
   const [theme, setTheme] = useState<Theme>(getInitialTheme());
@@ -69,15 +70,15 @@ const handleClick = () => {
 
           <div className="flex items-center gap-2">
             <button
-  onClick={handleClick}
-  className="relative rounded-xl border border-slate-200 bg-white/70 px-3 py-2 text-xl
+              onClick={handleClick}
+              className="relative rounded-xl border border-slate-200 bg-white/70 px-3 py-2 text-xl
             text-slate-900 hover:bg-white
             dark:border-slate-800 dark:bg-slate-950/60 dark:text-white dark:hover:bg-slate-900
               transition-all duration-200 active:scale-90"
-  aria-label="Open menu"
->
-  {flipped ? "🖕" : "✋"}
-</button>
+              aria-label="Open menu"
+            >
+              {flipped ? "🖕" : "✋"}
+            </button>
             <button
               aria-label="Toggle theme"
               onClick={toggleTheme}
@@ -141,14 +142,14 @@ const handleClick = () => {
           ))}
         </div>
       </div>
-    <a
-  href="https://github.com/piyushpokhrel"
-  target="_blank"
-  rel="noopener noreferrer"
->
-  GitHub
-</a>
-<Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+      <a
+        href="https://github.com/piyushpokhrel"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        GitHub
+      </a>
+      <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
     </nav>
 
   );

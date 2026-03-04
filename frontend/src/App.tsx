@@ -18,6 +18,7 @@ import { useDetailsPanelStore } from "./store";
 import { ParallaxBlob } from "./components/ParallaxBlob";
 import animationJson from "./assets/animations/celebrate.json";
 import { LottiePlayer } from "./components/LottiePlayer";
+import BuilderPage from "./pages/BuilderPage";
 
 function App() {
     const { isOpen } = useDetailsPanelStore();
@@ -52,6 +53,7 @@ function App() {
                                 <Routes>
                                     <Route path="/" element={<Dashboard />} />
                                     <Route path="/projects" element={<Projects />} />
+                                    <Route path="/builder" element={<BuilderPage />} />
                                     <Route path="/sponsor" element={<SponsorPage />} />
                                     <Route path="/about" element={<AboutPage />} />
                                     <Route path="/contact" element={<ContactPage />} />
