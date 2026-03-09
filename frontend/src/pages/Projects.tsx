@@ -48,8 +48,7 @@ function mapGithubToProjects(repos: GithubRepo[]): Project[] {
       ...(r.forks ? [`🍴 ${r.forks}`] : []),
     ],
     progress: 100,
-    // Prefer GitHub timestamps if available on your GithubRepo type
-    startDate: safeDateString((r as any).updated_at ?? (r as any).pushed_at ?? null),
+    startDate: safeDateString(r.updatedAt ?? null),
     teamSize: 1,
     image: undefined,
     url: r.url,
