@@ -1,5 +1,8 @@
 package com.ecommerce.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -14,6 +17,7 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/api")
+@Tag(name = "GitHub", description = "GitHub integration endpoints")
 public class GithubController {
 
     private final RestTemplate restTemplate;
@@ -22,9 +26,10 @@ public class GithubController {
         this.restTemplate = restTemplate;
     }
 
-
     @GetMapping("/github/{username}/repos")
-    public List<Map<String, Object>> getReposForUser(@PathVariable String username) {
+    @Operation(summary = "Fetch public GitHub repositories for a user")
+    public List<Map<String, Object>> getReposForUser(
+            @Parameter(description = "GitHub username") @PathVariable String username) {
 
         String u = (username == null) ? "" : username.trim();
         if (u.isEmpty()) {
@@ -36,10 +41,9 @@ public class GithubController {
                 .queryParam("per_page", 100)
                 .queryParam("sort", "updated")
                 .buildAndExpand(u)
-                .encode()     // ✅ important
+                .encode()
                 .toUri();
 
-        // ✅ GitHub-friendly headers
         HttpHeaders headers = new HttpHeaders();
         headers.set(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
         headers.set("User-Agent", "portfolio-visit");
@@ -64,7 +68,7 @@ public class GithubController {
             project.put("forks", repo.get("forks_count"));
             project.put("url", repo.get("html_url"));
             project.put("language", repo.get("language"));
-            project.put("updatedAt", repo.get("updated_at")); // optional but useful
+            project.put("updatedAt", repo.get("updated_at"));
             projects.add(project);
         }
 
