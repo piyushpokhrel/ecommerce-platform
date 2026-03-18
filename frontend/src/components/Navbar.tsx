@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { applyTheme, getInitialTheme, type Theme } from "../utils/theme";
 import { toggleTheme } from "../utils/theme";
 import Sidebar from "./Sidebar";
+import ArchivePage from "../pages/ArchivePage";
 
 export const Navbar = () => {
   const location = useLocation();
@@ -24,6 +25,7 @@ export const Navbar = () => {
     { path: "/", label: "Dashboard" },
     { path: "/projects", label: "Projects" },
     { path: "/builder", label: "Builder" },
+    { path: "/archive", label: "Archive" },
   ];
 
   const [theme, setTheme] = useState<Theme>(getInitialTheme());
@@ -77,7 +79,7 @@ export const Navbar = () => {
               transition-all duration-200 active:scale-90"
               aria-label="Open menu"
             >
-              {flipped ? "🖕" : "✋"}
+              {flipped ? "⭐" : "✋"}
             </button>
             <button
               aria-label="Toggle theme"
@@ -144,6 +146,7 @@ export const Navbar = () => {
       </div>
       <a
         href="https://github.com/piyushpokhrel"
+        className="font-dark text-white-900 hover:text-gray-900 dark:text-white-300 light:hover:text-black-900 dark:hover:text-white transition-colors"
         target="_blank"
         rel="noopener noreferrer"
       >

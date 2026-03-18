@@ -18,6 +18,7 @@ public class CorsConfig {
     // ✅ Your frontend static site (and localhost for dev)
     config.setAllowedOrigins(List.of(
         "https://ecommerce-platform-thsg.onrender.com",
+        "https://portfolio-visit.onrender.com",
         "http://localhost:5173",
         "http://localhost:3000"
     ));

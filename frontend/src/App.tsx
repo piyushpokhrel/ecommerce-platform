@@ -19,11 +19,14 @@ import { ParallaxBlob } from "./components/ParallaxBlob";
 import animationJson from "./assets/animations/celebrate.json";
 import { LottiePlayer } from "./components/LottiePlayer";
 import BuilderPage from "./pages/BuilderPage";
+import ArchivePage from "./pages/ArchivePage";
+import ChatBot from "./components/ChatBot";
 
 function App() {
     const { isOpen } = useDetailsPanelStore();
 
     return (
+
         <BrowserRouter>
             {/* Root must be flex-col so footer can sit at the bottom */}
             <div className="min-h-screen flex flex-col relative overflow-hidden bg-gradient-to-b from-slate-50 via-white to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
@@ -59,7 +62,9 @@ function App() {
                                     <Route path="/contact" element={<ContactPage />} />
                                     <Route path="/login" element={<LoginPage />} />
                                     <Route path="/orders" element={<OrdersPage />} />
+                                    <Route path="/archive" element={<ArchivePage />} />
                                     <Route path="*" element={<Navigate to="/" replace />} />
+
                                 </Routes>
                             </div>
                         </div>
@@ -72,6 +77,7 @@ function App() {
                 <Footer />
 
                 <ToastContainer />
+                <ChatBot />
 
                 {/* Put Lottie as an overlay so it doesn't push layout */}
                 <div className="pointer-events-none fixed bottom-4 right-4 z-40">
