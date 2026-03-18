@@ -12,6 +12,6 @@ export type GithubRepo = {
 };
 
 export const getGithubProjects = async () => {
-  const res = await api.get<GithubRepo[]>("/api/github/piyushpokhrel/repos");
+  const res = await api.get<GithubRepo[]>("/github/piyushpokhrel/repos");
   return res.data;
 };

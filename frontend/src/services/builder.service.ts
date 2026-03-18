@@ -14,6 +14,6 @@ export type GithubRepoDTO = {
 // we’ll call that for now.
 // Later we’ll switch to /api/github/:username/repos.
 export async function getGithubReposForUser(_username: string) {
-    const res = await api.get<GithubRepoDTO[]>("/api/projects");
+    const res = await api.get<GithubRepoDTO[]>("/projects");
     return res.data;
 }
