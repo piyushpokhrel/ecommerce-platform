@@ -8,6 +8,9 @@ darkMode: "class",
 lightMode: "class",
 theme: {
     extend: {
+      fontFamily: {
+        sans: ['Inter', 'sans-serif'],
+      },
     spacing: {
         '1': '0.25rem',   // 4px
         '2': '0.5rem',    // 8px

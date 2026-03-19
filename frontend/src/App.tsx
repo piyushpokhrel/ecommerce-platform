@@ -20,7 +20,9 @@ import animationJson from "./assets/animations/celebrate.json";
 import { LottiePlayer } from "./components/LottiePlayer";
 import BuilderPage from "./pages/BuilderPage";
 import ArchivePage from "./pages/ArchivePage";
+import PortfolioPage from "./pages/PortfolioPage";
 import ChatBot from "./components/ChatBot";
+import FloatingNavbar from "./components/FloatingNavbar";
 
 function App() {
     const { isOpen } = useDetailsPanelStore();
@@ -42,7 +44,7 @@ function App() {
                 <ParallaxBlob className="absolute right-1/4 top-20 w-80 h-80 bg-fuchsia-400/20" />
 
                 <Navbar />
-
+                <FloatingNavbar />
                 {/* Main area grows to fill space */}
                 <div className="flex flex-1">
                     <main
@@ -63,6 +65,7 @@ function App() {
                                     <Route path="/login" element={<LoginPage />} />
                                     <Route path="/orders" element={<OrdersPage />} />
                                     <Route path="/archive" element={<ArchivePage />} />
+                                    <Route path="/portfolio" element={<PortfolioPage />} />
                                     <Route path="*" element={<Navigate to="/" replace />} />
 
                                 </Routes>
