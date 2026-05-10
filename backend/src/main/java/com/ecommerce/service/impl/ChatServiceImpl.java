@@ -4,7 +4,6 @@ import com.ecommerce.dto.ChatRequest;
 import com.ecommerce.dto.ChatResponse;
 import com.ecommerce.service.ChatService;
 import org.springframework.ai.chat.model.ChatModel;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service

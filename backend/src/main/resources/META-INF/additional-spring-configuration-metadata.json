@@ -1,6 +1,16 @@
 {
   "properties": [
     {
+      "name": "gemini.api.key",
+      "type": "java.lang.String",
+      "description": "API key used by the Gemini integration."
+    },
+    {
+      "name": "spring.cloud.gcp.vertex.ai.gemini.chat.model-name",
+      "type": "java.lang.String",
+      "description": "Vertex AI Gemini chat model name."
+    },
+    {
       "name": "security.jwt.secret",
       "type": "java.lang.String",
       "description": "Secret key used to sign JWT tokens."
