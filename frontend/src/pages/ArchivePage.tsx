@@ -1,5 +1,4 @@
 import { Card, CardContent, CardHeader, CardTitle } from "../components/Card";
-import { Button } from "../components/Button";
 
 // ✅ Vite auto-import all matching files in a folder
 const photoModules = import.meta.glob("../assets/archive/photos/*.{png,jpg,jpeg,webp,gif}", {
@@ -41,28 +40,16 @@ export default function ArchivePage() {
             <div>
                 <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Archive</h1>
                 <p className="text-gray-600 dark:text-gray-400">
-                    A living collection of photos, videos, audio, and notes captured during the course.
+                    Curated records and media assets in one place.
                 </p>
             </div>
 
             <Card>
                 <CardHeader>
-                    <CardTitle>How it works</CardTitle>
+                    <CardTitle>Keywords</CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-3 text-gray-700 dark:text-gray-300">
-                    <p>• Capture anything in town (photo/video/audio/text).</p>
-                    <p>• Upload it to storage (Drive/Dropbox/OneDrive).</p>
-                    <p>• Keep the link + write a short reflection report.</p>
-                    <Button variant="outline">Upload instructions</Button>
-                </CardContent>
-            </Card>
-
-            <Card>
-                <CardHeader>
-                    <CardTitle>Entries (placeholder)</CardTitle>
-                </CardHeader>
-                <CardContent className="text-gray-600 dark:text-gray-400">
-                    Add your entries here later (timeline, gallery, map, etc).
+                <CardContent className="text-gray-700 dark:text-gray-300">
+                    <p>Digital Archiving • Media Management • Documentation • Asset Curation • Knowledge Retention</p>
                 </CardContent>
             </Card>
         </div>
