@@ -1,215 +1,66 @@
-# Portfolio App
+# Predicting Heart Disease Risk: A Comparison of Logistic Regression and Random Forest Models
 
-A production-grade React + TypeScript application demonstrating best practices in modern frontend development.
+## Course Information
+- **Course:** COSC-2507-F01-26F — Introduction to Data Science with Python  
+- **Institution:** Algoma University  
+- **Authors:** Piyush Pokhrel, Prashant Dhungana
 
-## 🎯 Key Features
+## Project Overview
+This project builds a reproducible machine learning pipeline to predict heart disease risk using the **UCI Heart Failure Clinical Records** dataset.
 
-### UI/UX Excellence
-- **Mobile-First Design** - Fully responsive from 320px to 4K displays
-- **Accessible** - WCAG 2.1 compliant with keyboard navigation and ARIA labels
-- **Dark Mode Ready** - Seamless theme switching (toggle in navbar)
-- **Smooth Animations** - Framer Motion for polished micro-interactions
-- **Consistent Spacing** - 4/8/12/16/24/32px scale throughout
+Dataset citation:
+- Chicco, D., & Jurman, G. (2020). *Heart failure clinical records*. UCI Machine Learning Repository. https://doi.org/10.24432/C5Z89R
 
-### Component Library
-- **Button** - 5 variants, 3 sizes, loading states
-- **Input** - Label, error, helper text, left/right icons
-- **Select** - Accessible dropdown with keyboard support
-- **Card** - Multiple variants, hoverable, interactive options
-- **Modal** - Keyboard escape, backdrop blur, focus trap
-- **Toast** - 4 types with auto-dismiss and animations
-- **Skeleton** - Loading placeholders for better perceived performance
+The workflow compares:
+1. **Logistic Regression** as an interpretable baseline (with odds ratio extraction)
+2. **Random Forest Classifier** as a more flexible non-linear model (with hyperparameter tuning and feature importance)
 
-### Pages
-- **Dashboard** - Real-time stats, recent projects, responsive grid
-- **Projects** - Advanced filtering, search, sorting, pagination
-- **Details Panel** - Context-aware side panel (desktop) / modal (mobile)
+The pipeline includes data integrity checks, feature standardization, class imbalance handling, model training, and evaluation with saved visualizations.
 
-### Advanced Features
-- **Search** - Real-time client-side search across projects
-- **Filters** - Status, priority, tags with URL state persistence
-- **Sort** - Multiple sort options (recent, progress, alphabetical)
-- **Empty States** - Helpful messaging when no data
-- **Error States** - User-friendly error handling with toasts
-- **Loading States** - Skeleton loaders during data fetch
-- **Optimistic UI** - Instant feedback on user actions
-
-## 🏗️ Architecture
-
-### State Management - Zustand
-**Why Zustand over Redux Toolkit or Context?**
-- **Minimal Boilerplate** - No providers, actions, or reducers
-- **Small Bundle** - ~1KB vs Redux's ~10KB
-- **TypeScript Native** - Excellent type inference
-- **Simple API** - Easy to learn and maintain
-- **Performance** - Re-renders only on subscribed state changes
-
-Perfect for this app's needs: toast notifications and UI state.
-
-### Project Structure
+## Repository Structure
 ```
-src/
-├── components/
-│   ├── ui/              # Reusable UI components
-│   │   ├── Button.tsx
-│   │   ├── Input.tsx
-│   │   ├── Select.tsx
-│   │   ├── Card.tsx
-│   │   ├── Modal.tsx
-│   │   ├── Toast.tsx
-│   │   └── Skeleton.tsx
-│   └── layout/          # Layout components
-│       ├── Navbar.tsx
-│       └── DetailsPanel.tsx
-├── pages/               # Page components
-│   ├── Dashboard.tsx
-│   └── Projects.tsx
-├── services/            # API layer
-│   └── api.ts
-├── store/               # Zustand stores
-│   └── index.ts
-├── types/               # TypeScript types
-│   └── index.ts
-├── App.tsx              # Main app
-├── main.tsx             # Entry point
-└── index.css            # Global styles
+.
+├── environment.yml
+├── requirements.txt
+├── main.py
+├── src/
+│   ├── data_preprocessing.py
+│   ├── models.py
+│   └── evaluation.py
+└── results/
+    ├── benchmark.csv
+    └── figures/
 ```
 
-## 🚀 Quick Start
+## Setup
+
+### 1) Create and activate Conda environment
+```bash
+conda env create -f environment.yml
+conda activate cosc2507-heart-risk
+```
+
+### 2) (Optional) Install with pip
+```bash
+pip install -r requirements.txt
+```
+
+## Run the Pipeline
+Place `heart_failure_clinical_records_dataset.csv` in your preferred location, then run:
 
 ```bash
-# Install dependencies
-npm install
-
-# Start development server
-npm run dev
-
-# Build for production
-npm run build
-
-# Preview production build
-npm run preview
+python main.py --data-path /absolute/path/to/heart_failure_clinical_records_dataset.csv
 ```
 
-## 🎨 Design System
+Optional arguments:
+- `--output-dir` (default: `results`)
+- `--cv-folds` (default: `5`)
+- `--imbalance-strategy` (`smote` or `class_weight`, default: `smote`)
 
-### Spacing Scale
-Consistent spacing using Tailwind's spacing tokens:
-- `1` = 4px
-- `2` = 8px
-- `3` = 12px
-- `4` = 16px
-- `6` = 24px
-- `8` = 32px
-
-### Typography
-- **Headings**: Bold, clear hierarchy
-- **Body**: 16px base, 1.5 line height
-- **Labels**: 14px, medium weight
-- **Helper Text**: 12px, muted color
-
-### Colors
-- **Primary**: Blue-600 (Actions, links)
-- **Success**: Green-600
-- **Warning**: Yellow-600
-- **Error**: Red-600
-- **Neutral**: Gray scale for content
-
-### Animations
-- **Duration**: 200-300ms for UI interactions
-- **Easing**: `ease-out` for natural feel
-- **Purpose**: Enhance UX, never distract
-
-## ♿ Accessibility
-
-- **Keyboard Navigation** - All interactive elements focusable
-- **ARIA Labels** - Proper labeling for screen readers
-- **Focus Indicators** - Clear visual focus states
-- **Color Contrast** - WCAG AA compliant ratios
-- **Semantic HTML** - Proper heading hierarchy
-- **Alt Text** - Descriptive image alternatives
-
-## 📱 Responsive Breakpoints
-
-- **Mobile**: < 640px (sm)
-- **Tablet**: 640px - 1024px (md/lg)
-- **Desktop**: > 1024px (lg+)
-
-### Layout Behavior
-- **Navbar**: Horizontal tabs collapse below md
-- **Details Panel**: Slides from side on desktop, modal on mobile
-- **Grid**: 1 column → 2 columns → 3 columns responsive
-
-## 🔧 Technical Highlights
-
-### Performance
-- **Code Splitting** - React Router lazy loading
-- **Tree Shaking** - Vite optimizations
-- **Manual Chunks** - Vendor splitting for better caching
-- **Optimized Images** - Lazy loading, responsive sizing
-
-### Type Safety
-- **Strict TypeScript** - No implicit any
-- **Typed Props** - Strong component contracts
-- **Typed API** - Full API response typing
-- **Type Guards** - Runtime type checking where needed
-
-### Developer Experience
-- **Hot Module Replacement** - Instant feedback
-- **TypeScript Errors** - Inline in editor
-- **Consistent Formatting** - Enforced code style
-- **Self-Documenting** - Clear naming, minimal comments
-
-## 🎯 Best Practices Demonstrated
-
-1. **Component Composition** - Reusable, composable components
-2. **Single Responsibility** - Each component has one job
-3. **Prop Drilling Avoidance** - Zustand for global state
-4. **Accessibility First** - Built-in, not bolted-on
-5. **Mobile First** - Start small, enhance larger
-6. **Progressive Enhancement** - Works without JS
-7. **Semantic HTML** - Proper element usage
-8. **Consistent Naming** - Clear, predictable patterns
-
-## 📦 Dependencies
-
-### Core
-- `react` - UI library
-- `react-dom` - React renderer
-- `react-router-dom` - Client-side routing
-- `typescript` - Type safety
-
-### State & Utils
-- `zustand` - State management
-- `clsx` - Class name composition
-
-### Animation
-- `framer-motion` - Declarative animations
-
-### Build Tools
-- `vite` - Fast build tool
-- `tailwindcss` - Utility-first CSS
-- `autoprefixer` - CSS vendor prefixes
-
-## 🚢 Production Checklist
-
-- [x] TypeScript strict mode
-- [x] Error boundaries
-- [x] Loading states
-- [x] Empty states
-- [x] Error states
-- [x] Keyboard navigation
-- [x] Screen reader support
-- [x] Mobile responsive
-- [x] Dark mode support
-- [x] Performance optimized
-- [x] SEO meta tags
-- [x] Analytics ready
-
-## 📝 License
-
-MIT - Feel free to use for your portfolio!
-
----
-
-**Built with** ❤️ **using modern web standards**
+## Outputs
+After execution, the pipeline creates:
+- `results/benchmark.csv` — model comparison table (Accuracy, Precision, Recall, F1, ROC-AUC)
+- `results/figures/confusion_matrices.png` — side-by-side confusion matrices
+- `results/figures/roc_curves.png` — overlaid ROC curves
+- `results/logistic_odds_ratios.csv` — logistic regression odds ratios
+- `results/random_forest_feature_importance.csv` — random forest feature importances
